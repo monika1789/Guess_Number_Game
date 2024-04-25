@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Guess the Number</title>
+    <style>
+        .container {
+            text-align: center;
+            margin-top: 100px;
+        }
+        input {
+            margin-top: 20px;
+        }
+        .message {
+            margin-top: 20px;
+            font-weight: bold;
+            color: blue;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Guess the Number Game</h1>
+        <p>Guess a number between {{ game.min_range }} and {{ game.max_range }}:</p>
+        <form method="post" action="{% url 'guess' %}">
+            {% csrf_token %}
+            <input type="number" name="guessed_number" required>
+            <input type="submit" value="Guess">
+        </form>
+        {% if message %}
+            <p class="message">{{ message }}</p>
+        {% endif %}
+    </div>
+</body>
+</html>
