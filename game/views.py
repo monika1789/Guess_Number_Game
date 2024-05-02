@@ -4,8 +4,7 @@ from django.http import HttpResponseRedirect
 from .models import Game
 import random
 
-# Create your views here.
-
+# Home view
 def home(request):
     print("Home view called") 
     # Check if there is an existing Game object
@@ -22,7 +21,8 @@ def home(request):
     game.save()
 
     return render(request, 'game/home.html', {'game': game})
-
+    
+# Providing hint to the player
 def guess(request):
     if request.method == 'POST':
         guessed_number = int(request.POST['guessed_number']) 
@@ -36,6 +36,7 @@ def guess(request):
         return render(request,'game/home.html',{'game':game ,'message':message})     
     return redirect('home')
 
+#  Restart the game 
 def restart(request):
     print("Restart view called") 
     game = Game.objects.first()
@@ -43,6 +44,7 @@ def restart(request):
         game.secret_number = random.randint(game.min_range,game.max_range)
         game.save()
     return HttpResponseRedirect('/')
+    
 # For testing purposes
 def game_list(request):
     games = Game.objects.all()
